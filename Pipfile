@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pymupdf = "===1.21.1"
 
 [dev-packages]
 black = "===23.1.0"
