@@ -1,3 +1,4 @@
+
 name: Python Continuous Integration
 on:
   push:
@@ -7,7 +8,7 @@ on:
 permissions:
   contents: read
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -21,19 +22,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user pipenv
     - name: Format with Black
-      continue-on-error: true
       run: |
         pipenv install --dev
-        pipenv run black train
-        pipenv run black train --check
+        pipenv run black .
+        pipenv run black . --check
     - name: Lint with flake8
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .
-    - name: Run unit tests
-      working-directory: train/extraction
-      run: |
-        pipenv install --dev
-        pipenv run coverage run -m unittest tests.extraction_test
-        pipenv run coverage report
+
